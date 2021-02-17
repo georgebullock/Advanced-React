@@ -49,7 +49,8 @@ export default withAuth(
       },
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: "id",
+      // Note: This is a GraphQL query 🤯
+      User: "id name email",
     }),
   })
 );
