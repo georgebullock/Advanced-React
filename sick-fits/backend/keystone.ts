@@ -12,6 +12,7 @@ import {
 import { Product } from "./schemas/Products";
 import { User } from "./schemas/Users";
 import { ProductImage } from "./schemas/ProductImage";
+import { insertSeedData } from "./seed-data";
 
 const databaseURL = process.env.DATABASE_URL;
 const sessionConfig = {
@@ -40,7 +41,11 @@ export default withAuth(
     db: {
       adapter: "mongoose",
       url: databaseURL,
-      // TODO: Add data seeding
+      async onConnect(keystone) {
+        if (process.argv.includes("--seed-data")) {
+          await insertSeedData(keystone);
+        }
+      },
     },
 
     lists: createSchema({
