@@ -11,6 +11,7 @@ import {
 } from "@keystone-next/keystone/session";
 import { Product } from "./schemas/Products";
 import { User } from "./schemas/Users";
+import { ProductImage } from "./schemas/ProductImage";
 
 const databaseURL = process.env.DATABASE_URL;
 const sessionConfig = {
@@ -45,11 +46,12 @@ export default withAuth(
     lists: createSchema({
       User,
       Product,
+      ProductImage,
     }),
 
     ui: {
       isAccessAllowed: ({ session }) => {
-        console.log(session);
+        console.log("session: ", session);
         return !!session?.data;
       },
     },
