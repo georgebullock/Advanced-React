@@ -9,6 +9,7 @@ import {
   withItemData,
   statelessSessions,
 } from "@keystone-next/keystone/session";
+import { Product } from "./schemas/Products";
 import { User } from "./schemas/Users";
 
 const databaseURL = process.env.DATABASE_URL;
@@ -34,20 +35,25 @@ export default withAuth(
         credentials: true,
       },
     },
+
     db: {
       adapter: "mongoose",
       url: databaseURL,
       // TODO: Add data seeding
     },
+
     lists: createSchema({
       User,
+      Product,
     }),
+
     ui: {
       isAccessAllowed: ({ session }) => {
         console.log(session);
         return !!session?.data;
       },
     },
+
     session: withItemData(statelessSessions(sessionConfig), {
       // Note: This is a GraphQL query 🤯
       User: "id name email",
